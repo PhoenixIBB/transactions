@@ -21,16 +21,12 @@ public class UserService {
     private final UserMapper userMapper;
 
     @Autowired
-
     public UserService(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
     }
 
-    public UserResponseDTO createUser(long id, UserRequestDTO userRequestDTO) throws UserNotFoundException {
-        if (userRepository.findById(id).isPresent()) {
-            throw new UserNotFoundException("Пользователь не найден!");
-        }
+    public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
         UserEntity userEntity = userMapper.fromRequestDTO(userRequestDTO);
         userRepository.saveAndFlush(userEntity);
         return userMapper.toResponseDTO(userEntity);

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/{userId}")
+@RequestMapping("/api")
 public class UserController {
 
     private final UserService userService;
@@ -23,9 +23,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/")
-    public ResponseEntity<UserResponseDTO> createUser(@PathVariable long userId, @Valid @RequestBody UserRequestDTO userRequestDTO) throws UserNotFoundException {
-        return ResponseEntity.ok(userService.createUser(userId, userRequestDTO));
+    @PostMapping("/create")
+    public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRequestDTO userRequestDTO) throws UserNotFoundException {
+        return ResponseEntity.ok(userService.createUser(userRequestDTO));
     }
 
     @GetMapping("/")
@@ -33,7 +33,7 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    @GetMapping("/")
+    @GetMapping("/{userId}")
     public ResponseEntity<UserResponseDTO> getUserById(@PathVariable long userId) throws UserNotFoundException {
         UserResponseDTO userEntity = userService.getUserById(userId);
         return userEntity != null ?
@@ -41,7 +41,7 @@ public class UserController {
                 ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/")
+    @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deleteUser(@PathVariable long userId) throws UserNotFoundException {
         return userService.deleteUser(userId) ?
                 ResponseEntity.noContent().build() :

@@ -1,18 +1,19 @@
 package com.operator.transactions.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Objects;
 
-@Data
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "users")
 public class UserEntity {
 
@@ -22,18 +23,80 @@ public class UserEntity {
     @Column(name = "id")
     private Long id;
 
-    @NotBlank(message = "Поле 'имя' не может быть пустым")
-    @Size(max = 55, message = "Длина имени не должна превышать 55 символов")
     @Column(name = "name")
     private String name;
 
-    @NotBlank(message = "Поле 'фамилия' не может быть пустым")
-    @Size(max = 55, message = "Длина фамилии не должна превышать 55 символов")
     @Column(name = "surname")
     private String surname;
 
     @OneToMany(mappedBy = "user"
             , cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
+    @JsonManagedReference("transactions")
     private List<TransactionEntity> transactions;
 
+    public UserEntity() {
+    }
+
+    public UserEntity(Long id, String name, String surname, List<TransactionEntity> transactions) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.transactions = transactions;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public List<TransactionEntity> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<TransactionEntity> transactions) {
+        this.transactions = transactions;
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", transactions=" + transactions +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserEntity that = (UserEntity) o;
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(surname, that.surname) && Objects.equals(transactions, that.transactions);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, surname, transactions);
+    }
 }
