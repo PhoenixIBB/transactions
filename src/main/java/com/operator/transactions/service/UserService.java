@@ -47,25 +47,28 @@ public class UserService {
     }
 
     public UserResponseDTO getUserById(long userId) throws UserNotFoundException {
-        return getUser(userId);
+        return userMapper.toResponseDTO(getUser(userId));
     }
 
-    public UserResponseDTO updateUserProperty(long id, Consumer<UserEntity> updater) throws UserNotFoundException {
-        UserEntity userForUpdating = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Пользователь не найден."));
-        updater.accept(userForUpdating);
-        return userMapper.toResponseDTO(userRepository.saveAndFlush(userForUpdating));
+    public UserResponseDTO updateUser(long userId, UserRequestDTO userRequestDTO) throws UserNotFoundException {
+        UserEntity userEntity = getUser(userId);
+        userEntity.setName(userRequestDTO.getName());
+        userEntity.setSurname(userRequestDTO.getSurname());
+        userEntity.setTransactions(userRequestDTO.getTransactions());
+        userRepository.saveAndFlush(userEntity);
+        return userMapper.toResponseDTO(userEntity);
     }
 
-    public boolean deleteUser(long id) {
-        if (!userRepository.existsById(id)) {
+    public boolean deleteUser(long userId) throws UserNotFoundException {
+        if(getUser(userId) == null) {
             return false;
         }
-        userRepository.deleteById(id);
+        userRepository.deleteById(userId);
         return true;
     }
 
-    private UserResponseDTO getUser(long userId) throws UserNotFoundException {
-        return userMapper.toResponseDTO(userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("Пользователь с таким id не найден!")));
+    private UserEntity getUser(long userId) throws UserNotFoundException {
+        return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("Пользователь с таким id не найден!"));
     }
 
 }

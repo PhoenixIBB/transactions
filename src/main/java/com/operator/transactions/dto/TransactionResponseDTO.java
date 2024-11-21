@@ -17,6 +17,6 @@ public class TransactionResponseDTO {
     private String category;
     private String source;
     private LocalDateTime date;
-    private User user;
+    private UserEntity user;
 
 }
