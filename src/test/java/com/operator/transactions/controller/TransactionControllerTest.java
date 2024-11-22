@@ -33,9 +33,6 @@ class TransactionControllerTest {
     private TransactionController transactionController;
 
     @Mock
-    private TransactionRepository transactionRepository;
-
-    @Mock
     private TransactionService transactionService;
 
     private MockMvc mockMvc;
