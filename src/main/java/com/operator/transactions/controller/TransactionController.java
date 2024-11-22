@@ -4,6 +4,8 @@ import com.operator.transactions.dto.TransactionRequestDTO;
 import com.operator.transactions.dto.TransactionResponseDTO;
 import com.operator.transactions.exception.TransactionNotFoundException;
 import com.operator.transactions.service.TransactionService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ import java.util.List;
 public class TransactionController {
 
     private final TransactionService transactionService;
+    private static final Logger logger = LoggerFactory.getLogger(TransactionController.class);
 
     @Autowired
     public TransactionController(TransactionService transactionService) {
@@ -37,6 +40,7 @@ public class TransactionController {
     @PostMapping
     public ResponseEntity<TransactionResponseDTO> createTransaction(
             @RequestBody TransactionRequestDTO transactionRequestDTO) {
+        logger.info("POST-запрос на /api/{userId}/transactions");
         return ResponseEntity.status(HttpStatus.CREATED).body(transactionService.createTransaction(transactionRequestDTO));
     }
 
@@ -52,6 +56,7 @@ public class TransactionController {
      */
     @GetMapping
     public ResponseEntity<List<TransactionResponseDTO>> getTransactions(@PathVariable long userId) {
+        logger.info("GET-запрос на /api/" + userId + "/transactions");
         return ResponseEntity.ok(transactionService.getTransactionsByUser(userId));
     }
 
@@ -69,6 +74,7 @@ public class TransactionController {
     @GetMapping("/{transactionId}")
     public ResponseEntity<TransactionResponseDTO> getTransaction(@PathVariable long transactionId)
             throws TransactionNotFoundException {
+        logger.info("POST-запрос на /api/{userId}/transactions/" + transactionId);
         return ResponseEntity.ok(transactionService.getTransaction(transactionId));
     }
 
@@ -88,6 +94,7 @@ public class TransactionController {
     @PutMapping("/{transactionId}")
     public ResponseEntity<TransactionResponseDTO> updateTransaction(@PathVariable long transactionId
             , @RequestBody TransactionRequestDTO transactionRequestDTO) throws TransactionNotFoundException {
+        logger.info("PUT-запрос на /api/{userId}/transactions/" + transactionId);
         return ResponseEntity.ok(transactionService.updateTransaction(transactionId, transactionRequestDTO));
     }
 
@@ -104,6 +111,7 @@ public class TransactionController {
      */
     @DeleteMapping("/{transactionId}")
     public ResponseEntity<String> deleteTransaction(@PathVariable long transactionId) throws TransactionNotFoundException {
+        logger.info("DELETE-запрос на /api/{userId}/transactions" + transactionId);
         boolean isDeleted = transactionService.deleteTransaction(transactionId);
         return isDeleted ?
                 ResponseEntity.ok("Zadacha udalena uspeshno.") :

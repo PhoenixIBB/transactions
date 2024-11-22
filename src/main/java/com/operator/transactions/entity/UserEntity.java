@@ -24,24 +24,17 @@ public class UserEntity {
 
     /**
      * Список транзакций, связанных с пользователем
-     *
+     * <p>
      * Связь {@link OneToMany} указывает, что список связывается полем user в классе TransactionEntity,
      * указан тип каскадирования.
      * Используется аннотация {@link JsonManagedReference} для предотвращения рекурсии при JSON-сериализации.
      */
     @OneToMany(mappedBy = "user"
-            , cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
+            , cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JsonManagedReference("transactions")
     private List<TransactionEntity> transactions;
 
     public UserEntity() {
-    }
-
-    public UserEntity(Long id, String name, String surname, List<TransactionEntity> transactions) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.transactions = transactions;
     }
 
     public Long getId() {
