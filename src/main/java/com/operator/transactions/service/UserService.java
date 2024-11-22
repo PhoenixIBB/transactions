@@ -1,16 +1,15 @@
 package com.operator.transactions.service;
 
 import com.operator.transactions.entity.UserEntity;
-import com.operator.transactions.exceptions.UserNotFoundException;
+import com.operator.transactions.exception.UserNotFoundException;
 import com.operator.transactions.repository.UserRepository;
-import com.operator.transactions.utils.UserMapper;
+import com.operator.transactions.util.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.operator.transactions.dto.UserResponseDTO;
 import com.operator.transactions.dto.UserRequestDTO;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Service

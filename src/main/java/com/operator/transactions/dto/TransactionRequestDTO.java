@@ -1,7 +1,6 @@
 package com.operator.transactions.dto;
 
 import com.operator.transactions.entity.UserEntity;
-import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.Objects;

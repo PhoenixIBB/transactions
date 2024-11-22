@@ -1,4 +1,4 @@
-package com.operator.transactions.exceptions;
+package com.operator.transactions.exception;
 
 public class UserNotFoundException extends Exception {
     public UserNotFoundException(String message) {

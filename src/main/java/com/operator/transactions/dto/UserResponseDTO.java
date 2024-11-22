@@ -2,7 +2,6 @@ package com.operator.transactions.dto;
 
 import com.operator.transactions.entity.TransactionEntity;
 
-
 import java.util.List;
 import java.util.Objects;
 

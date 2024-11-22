@@ -1,10 +1,9 @@
-package com.operator.transactions.controllers;
+package com.operator.transactions.controller;
 
 import com.operator.transactions.dto.UserRequestDTO;
 import com.operator.transactions.dto.UserResponseDTO;
-import com.operator.transactions.exceptions.UserNotFoundException;
+import com.operator.transactions.exception.UserNotFoundException;
 import com.operator.transactions.service.UserService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,10 +1,11 @@
-package com.operator.transactions.controllers;
+package com.operator.transactions.controller;
 
 import com.operator.transactions.dto.TransactionRequestDTO;
 import com.operator.transactions.dto.TransactionResponseDTO;
-import com.operator.transactions.exceptions.TransactionNotFoundException;
+import com.operator.transactions.exception.TransactionNotFoundException;
 import com.operator.transactions.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,13 +22,13 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<TransactionResponseDTO> createTransaction(
             @RequestBody TransactionRequestDTO transactionRequestDTO) {
-        return ResponseEntity.ok(transactionService.createTransaction(transactionRequestDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(transactionService.createTransaction(transactionRequestDTO));
     }
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<TransactionResponseDTO>> getTransactions(@PathVariable long userId) {
         return ResponseEntity.ok(transactionService.getTransactionsByUser(userId));
     }

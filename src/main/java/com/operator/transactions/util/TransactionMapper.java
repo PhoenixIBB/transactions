@@ -1,4 +1,4 @@
-package com.operator.transactions.utils;
+package com.operator.transactions.util;
 
 import com.operator.transactions.dto.TransactionRequestDTO;
 import com.operator.transactions.dto.TransactionResponseDTO;
