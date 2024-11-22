@@ -6,6 +6,10 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * Сущность, представляющая транзакцию.
+ * Хранит информацию о транзакции, такую как сумма, категория, контрагент, дата и пользователь, связанный с транзакцией.
+ */
 @Entity
 @Table(name = "transactions")
 public class TransactionEntity {
@@ -27,6 +31,11 @@ public class TransactionEntity {
     @Column(name = "date")
     private LocalDateTime date;
 
+    /**
+     * Пользователь, связанный с транзакцией.
+     * Связь указывает на {@link UserEntity} и используется для отображения всех транзакций, принадлежащих пользователю.
+     * Используется аннотация {@link JsonBackReference} для предотвращения циклической зависимости при JSON-сериализации.
+     */
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonBackReference("transactions")

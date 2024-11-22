@@ -22,6 +22,13 @@ public class UserEntity {
     @Column(name = "surname")
     private String surname;
 
+    /**
+     * Список транзакций, связанных с пользователем
+     *
+     * Связь {@link OneToMany} указывает, что список связывается полем user в классе TransactionEntity,
+     * указан тип каскадирования.
+     * Используется аннотация {@link JsonManagedReference} для предотвращения рекурсии при JSON-сериализации.
+     */
     @OneToMany(mappedBy = "user"
             , cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
     @JsonManagedReference("transactions")
