@@ -1,0 +1,8 @@
+com.operator.transactions
+com.operator.transactions.controller
+com.operator.transactions.dto
+com.operator.transactions.entity
+com.operator.transactions.exception
+com.operator.transactions.repository
+com.operator.transactions.service
+com.operator.transactions.util
